@@ -8,3 +8,11 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+.post {
+  border: solid orange;
+  margin: 20px;
+  width: 200px;
+  height: 150px;
+  padding: 10px;
+  background-color: beige;
+}
