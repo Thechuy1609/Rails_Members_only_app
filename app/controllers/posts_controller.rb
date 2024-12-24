@@ -6,9 +6,9 @@ class PostsController < ApplicationController
     @posts = Post.all
     @posts = Post.includes(:user).all
   end
-
-  def new
-    @post = Post.new
+    
+    def new
+      @post = Post.new
   end
 
   def update
@@ -31,7 +31,9 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
+      @user = current_user
       flash[:success] = 'Post successfully created'
+      MemberMailer.with(user: @user).welcome_email.deliver_later
       redirect_to posts_path
     else
       flash.now[:error] = 'Something went wrong'
@@ -44,7 +46,6 @@ class PostsController < ApplicationController
     end
 
   private
-
   def post_params
     params.require(:post).permit(:title, :body)
   end
